@@ -62,10 +62,16 @@ public class QueueHandlerHiveDriverRunHook implements HiveDriverRunHook {
 		try {
 			jobClient = new JobClient(job);
 			QueueAclsInfo[] infos = jobClient.getQueueAclsForCurrentUser();
+			
+			LOG.info("-----queue-----");
+			for(QueueAclsInfo info:infos){
+				LOG.info("QueueAclsInfo:" + info.getQueueName());
+			}
+			LOG.info("-----queue-----");
 
 			for (QueueAclsInfo info : infos) {
 				String name = info.getQueueName().toLowerCase();
-				if (name != null && name.indexOf("default") == -1) {
+				if (name != null && name.indexOf("root") == -1) {
 					LOG.debug("Checking acl info for queue:" + name);
 					boolean qualified = false;
 					String[] ops = info.getOperations();
