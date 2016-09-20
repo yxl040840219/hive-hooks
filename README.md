@@ -6,6 +6,7 @@ build: mvn clean install
 
 2) HiveServer2Auth: 用来判断连接hiveServer2 的用户名密码
 
+3) GrantHook: 用来判断执行授权的用户
 
 Steps to configure:
 -------------------
@@ -30,14 +31,25 @@ a) 配置 hive-site.xml
   <value>com.customer.auth.HiveServer2Auth</value>  
 </property> 
 
-hive.server2.custom.authentication.file
-
 <property>  
   <name>hive.server2.custom.authentication.file</name>  
   <value>local file path</value>  
 </property> 
 
  
+```
+
+```
+<property>  
+  <name>hive.grant.admin.username</name>  
+  <value>hadoop</value>  
+</property> 
+
+<property> 
+    <name>hive.semantic.analyzer.hook</name> 
+    <value>com.customer.grant.GrantHook</value>  
+</property>
+
 ```
 
 b) 拷贝 jar hive-custom-*jar 到 hive lib
