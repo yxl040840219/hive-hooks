@@ -2,12 +2,9 @@ Contains hive custom hooks
 
 build: mvn clean install
 
-Following are the available hooks
+1) QueueHandlerHiveDriverRunHook : 用来判断hive用户提交Job 运行的队列
+2) HiveServer2Auth: 用来判断连接hiveServer2 的用户名密码
 
-1) QueueHandlerHiveDriverRunHook : 
-
-This hook helps determing the allowed queue name for the user and override it automatically while executing hive queries.
-This hook assumes queue/pool name property is mapred.job.queue.name for MR and tez.queue.name for tez. if the queue name is set to "default" or null, this hook tries to find the better non-default queue allowed for the user and sets it automatically. This hook will be invoked as Pre Driver Run hook and will effect queue determination while executing hive queries via HiveCLI, HiveServer2, Hue's Beeswax server 
 
 Steps to configure:
 -------------------
@@ -17,11 +14,32 @@ a) Add the following property to /etc/hive/conf/hive-site.xml
 ```
    <property>
     <name>hive.exec.driver.run.hooks</name>
-    <value>org.apache.hadoop.mapred.QueueHandlerHiveDriverRunHook</value>
+    <value>com.customer.queue.QueueHandlerHiveDriverRunHook</value>
   </property>
 ```
 
-b) Copy the compiled jar hive-custom-hooks-*jar to /usr/lib/hive/lib/ on Hive/HiveServer2/Hue hosts.
+```
+<property>  
+  <name>hive.server2.authentication</name>  
+  <value>CUSTOM</value>  
+</property>  
+  
+<property>  
+  <name>hive.server2.custom.authentication.class</name>  
+  <value>com.customer.auth.HiveServer2Auth</value>  
+</property> 
+
+hive.server2.custom.authentication.file
+
+<property>  
+  <name>hive.server2.custom.authentication.file</name>  
+  <value>local file path</value>  
+</property> 
+
+ 
+```
+
+b) Copy the compiled jar hive-custom-*jar to hive lib
 
 c) Restart hue/hiveserver2.
 
