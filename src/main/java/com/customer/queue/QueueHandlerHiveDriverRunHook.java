@@ -1,4 +1,4 @@
-package org.apache.hadoop.mapred;
+package com.customer.queue;
 
 import java.io.IOException;
 
@@ -8,11 +8,15 @@ import org.apache.hadoop.hive.ql.HiveDriverRunHook;
 import org.apache.hadoop.hive.ql.HiveDriverRunHookContext;
 import org.apache.hadoop.mapred.JobClient;
 import org.apache.hadoop.mapred.JobConf;
-import org.apache.hadoop.mapred.QueueAclsInfo;
+import org.apache.hadoop.mapreduce.QueueAclsInfo;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
+/**
+ * 用来判断hive 用户执行HQL应该提交的队列
+ * @author 
+ *
+ */
 public class QueueHandlerHiveDriverRunHook implements HiveDriverRunHook {
 
 	private static final String MR_QUEUE_NAME_PROPERTY = "mapred.job.queue.name";
@@ -42,17 +46,13 @@ public class QueueHandlerHiveDriverRunHook implements HiveDriverRunHook {
 			queue_property = TEZ_QUEUE_NAME_PROPERTY;
 		}
 
-		String queue = config.get(queue_property);
+		String queue = config.get(queue_property); // 获取当前的队列
 
-		// if queue name is specified as default, try to find a better qualified
-		// queue
-		// if (queue==null || "default".equals(queue)) {
 		String newQueue = getQualifiedQueue(context.getConf(), queue);
-		if (newQueue != null && !newQueue.equalsIgnoreCase(queue)) {
+		if (newQueue != null && !newQueue.equalsIgnoreCase(queue)) {// 判断是否需要重写
 			config.set(queue_property, newQueue);
 			LOG.info("queue name overriden to " + queue
 					+ " From default for the user " + config.getUser());
-			// }
 		}
 	}
 
@@ -63,18 +63,24 @@ public class QueueHandlerHiveDriverRunHook implements HiveDriverRunHook {
 		JobClient jobClient;
 		try {
 			jobClient = new JobClient(job);
-			QueueAclsInfo[] infos = jobClient.getQueueAclsForCurrentUser();
+			QueueAclsInfo[] infos = jobClient.getQueueAclsForCurrentUser();//获取当前用户可以提交Job的队列
+			LOG.info("------current queues------");
+			for(QueueAclsInfo info : infos){
+				LOG.info(info.getQueueName());
+			}
+			LOG.info("------current queues------");
+			
 			// first check default queue
 			for (QueueAclsInfo info : infos) {
 				String name = info.getQueueName();
 				boolean qualified = false;
 
-				if ("default".equals(name)) {
+				if ("root.default".equals(name)) {
 					LOG.info("优先判断 default Queue");
 					String[] ops = info.getOperations();
 					if (ops != null && ops.length > 0) {
 						for (String op : ops) {
-							if ("SUBMIT_APPLICATIONS".equals(op)) {
+							if ("SUBMIT_APPLICATIONS".equals(op)) {// 有提交Job 的权限
 								qualified = true;
 								break;
 							}
@@ -86,12 +92,11 @@ public class QueueHandlerHiveDriverRunHook implements HiveDriverRunHook {
 					break;
 				}
 			}
-
+			// 判断其他的队列
 			if (queue == null || queue.length() == 0) {
 				for (QueueAclsInfo info : infos) {
 					String name = info.getQueueName();
-					// exclude root queue
-					if (name != null && name.indexOf("root") == -1) {
+					if (name != null) {
 						boolean qualified = false;
 						String[] ops = info.getOperations();
 						if (ops != null && ops.length > 0) {
