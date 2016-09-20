@@ -9,7 +9,7 @@ build: mvn clean install
 Steps to configure:
 -------------------
 
-a) Add the following property to /etc/hive/conf/hive-site.xml
+a) 配置 hive-site.xml
 
 ```
    <property>
@@ -39,8 +39,8 @@ hive.server2.custom.authentication.file
  
 ```
 
-b) Copy the compiled jar hive-custom-*jar to hive lib
+b) 拷贝 jar hive-custom-*jar 到 hive lib
 
-c) Restart hue/hiveserver2.
+c) 重启 hiveserver2.
 
 
