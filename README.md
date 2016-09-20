@@ -3,6 +3,7 @@ Contains hive custom hooks
 build: mvn clean install
 
 1) QueueHandlerHiveDriverRunHook : 用来判断hive用户提交Job 运行的队列
+
 2) HiveServer2Auth: 用来判断连接hiveServer2 的用户名密码
 
 
