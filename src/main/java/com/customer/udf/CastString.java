@@ -16,7 +16,7 @@ public class CastString extends GenericUDF {
 	@Override
 	public ObjectInspector initialize(ObjectInspector[] arguments)
 			throws UDFArgumentException {
-	    return PrimitiveObjectInspectorFactory.writableIntObjectInspector;  
+	    return PrimitiveObjectInspectorFactory.javaStringObjectInspector;  
 	}
 
 	@Override
