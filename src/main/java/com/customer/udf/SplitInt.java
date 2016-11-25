@@ -33,7 +33,7 @@ class SplitInt extends GenericUDF {
 		}
 
 		return ObjectInspectorFactory
-				.getStandardListObjectInspector(PrimitiveObjectInspectorFactory.writableStringObjectInspector);
+				.getStandardListObjectInspector(PrimitiveObjectInspectorFactory.writableIntObjectInspector);
 	}
 
 	@Override
@@ -47,7 +47,7 @@ class SplitInt extends GenericUDF {
 		Text s = (Text) converters[0].convert(arguments[0].get());
 		Text regex = (Text) converters[1].convert(arguments[1].get());
 
-		ArrayList<Object> result = new ArrayList<Object>();
+		ArrayList<IntWritable> result = new ArrayList<IntWritable>();
 
 		for (String str : s.toString().split(regex.toString(), -1)) {
 			result.add(new IntWritable(Integer.parseInt(str.trim())));
