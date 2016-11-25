@@ -37,7 +37,7 @@ class SplitInt extends GenericUDF {
 	}
 
 	@Override
-	public ArrayList<IntWritable> evaluate(DeferredObject[] arguments) throws HiveException {
+	public Object evaluate(DeferredObject[] arguments) throws HiveException {
 		assert (arguments.length == 2);
 
 		if (arguments[0].get() == null || arguments[1].get() == null) {
@@ -47,7 +47,7 @@ class SplitInt extends GenericUDF {
 		Text s = (Text) converters[0].convert(arguments[0].get());
 		Text regex = (Text) converters[1].convert(arguments[1].get());
 
-		ArrayList<IntWritable> result = new ArrayList<IntWritable>();
+		ArrayList<Object> result = new ArrayList<Object>();
 
 		for (String str : s.toString().split(regex.toString(), -1)) {
 			result.add(new IntWritable(Integer.parseInt(str.trim())));
