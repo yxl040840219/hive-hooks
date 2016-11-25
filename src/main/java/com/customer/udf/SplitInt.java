@@ -37,7 +37,7 @@ class SplitInt extends GenericUDF {
 	}
 
 	@Override
-	public Object evaluate(DeferredObject[] arguments) throws HiveException {
+	public ArrayList<IntWritable> evaluate(DeferredObject[] arguments) throws HiveException {
 		assert (arguments.length == 2);
 
 		if (arguments[0].get() == null || arguments[1].get() == null) {
