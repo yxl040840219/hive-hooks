@@ -50,7 +50,7 @@ class SplitInt extends GenericUDF {
 		ArrayList<IntWritable> result = new ArrayList<IntWritable>();
 
 		for (String str : s.toString().split(regex.toString(), -1)) {
-			result.add(new IntWritable(Integer.parseInt(str.trim())));
+			result.add(new IntWritable(Double.valueOf(str).intValue()));
 		}
 
 		return result;
@@ -62,4 +62,8 @@ class SplitInt extends GenericUDF {
 		return getStandardDisplayString("split_int", children);
 	}
 
+	public static void main(String[] args) {
+		System.out.println(Double.valueOf("2.0").intValue());
+	}
+	
 }
