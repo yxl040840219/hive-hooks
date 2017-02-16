@@ -12,7 +12,6 @@ import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspectorConverters;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspectorFactory;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
-import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 
 class MonthDiff extends GenericUDF {
@@ -23,7 +22,7 @@ class MonthDiff extends GenericUDF {
 			throws UDFArgumentException {
 		if (arguments.length != 2) {
 			throw new UDFArgumentLengthException(
-					"The function SPLIT(s, regexp) takes exactly 2 arguments.");
+					"The function monthdiff(start,end) takes exactly 2 arguments.");
 		}
 
 		converters = new ObjectInspectorConverters.Converter[arguments.length];
@@ -34,8 +33,7 @@ class MonthDiff extends GenericUDF {
 							PrimitiveObjectInspectorFactory.writableStringObjectInspector);
 		}
 
-		return ObjectInspectorFactory
-				.getStandardListObjectInspector(PrimitiveObjectInspectorFactory.writableLongObjectInspector);
+		return PrimitiveObjectInspectorFactory.writableLongObjectInspector;
 	}
 
 	@Override
