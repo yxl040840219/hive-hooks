@@ -10,8 +10,8 @@ import org.apache.hadoop.hive.ql.metadata.HiveException;
 import org.apache.hadoop.hive.ql.udf.generic.GenericUDF;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspectorConverters;
-import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspectorFactory;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
+import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 
 class MonthDiff extends GenericUDF {
@@ -56,7 +56,8 @@ class MonthDiff extends GenericUDF {
 			throw new HiveException("日期解析错误 yyyy-MM") ;
 		}
 		long month =(endCalendar.getTimeInMillis() - startCalendar.getTimeInMillis()) / (3600 * 1000 * 24 * 30l);
-		return month;
+		LongWritable result = new LongWritable(month);
+		return result;
 	}
 
 	@Override
