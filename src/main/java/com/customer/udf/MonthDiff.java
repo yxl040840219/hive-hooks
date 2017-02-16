@@ -58,8 +58,7 @@ class MonthDiff extends GenericUDF {
 			throw new HiveException("日期解析错误 yyyy-MM") ;
 		}
 		long month =(endCalendar.getTimeInMillis() - startCalendar.getTimeInMillis()) / (3600 * 1000 * 24 * 30l);
-		LongWritable result = new LongWritable(month) ;
-		return result;
+		return month;
 	}
 
 	@Override
