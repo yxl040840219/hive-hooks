@@ -25,7 +25,7 @@ public class MD5 extends GenericUDF {
     public ObjectInspector initialize(ObjectInspector[] arguments) throws UDFArgumentTypeException {
 
         argumentOIs = arguments;
-        return PrimitiveObjectInspectorFactory.writableIntObjectInspector;
+        return PrimitiveObjectInspectorFactory.writableStringObjectInspector ;
     }
 
 
