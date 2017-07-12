@@ -8,7 +8,6 @@ import org.apache.hadoop.hive.ql.metadata.HiveException;
 import org.apache.hadoop.hive.ql.udf.generic.GenericUDF;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 
 /**
@@ -45,13 +44,13 @@ public class MD5 extends GenericUDF {
 
     @Override
     public String getDisplayString(String[] children) {
-        return getStandardDisplayString("_md5", children, ",");
+        return getStandardDisplayString("md5", children, ",");
     }
 
 
     public static void main(String[] args) throws Exception {
         MD5 md5 = new MD5();
-        String [] arguments = {"123","123"} ;
+        Integer [] arguments = {123,123} ;
         StringBuffer sb = new StringBuffer() ;
         for (int i = 0; i < arguments.length; i++) {
             sb.append(arguments[i].toString()) ;
