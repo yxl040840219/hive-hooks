@@ -38,7 +38,8 @@ public class MD5 extends GenericUDF {
         for (int i = 0; i < arguments.length; i++) {
              sb.append(arguments[i].toString()) ;
         }
-        return Hashing.md5().hashString(sb.toString()).toString() ;
+        Text result = new Text(Hashing.md5().hashString(sb.toString()).toString());
+        return  result ;
     }
 
     @Override
