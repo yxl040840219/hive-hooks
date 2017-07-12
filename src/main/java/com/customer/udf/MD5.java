@@ -29,19 +29,16 @@ public class MD5 extends GenericUDF {
     }
 
 
-    private final Text result = new Text();
-
     /**
      * @param arguments 传入参数
      * @return md5值
      */
-    public Object evaluate(DeferredObject[] arguments) {
+    public String evaluate(DeferredObject[] arguments) {
         StringBuffer sb = new StringBuffer() ;
         for (int i = 0; i < arguments.length; i++) {
              sb.append(arguments[i].toString()) ;
         }
-        result.set(Hashing.md5().hashString(sb.toString()).toString());
-        return result ;
+        return Hashing.md5().hashString(sb.toString()).toString() ;
     }
 
     @Override
