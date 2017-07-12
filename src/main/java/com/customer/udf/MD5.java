@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import com.google.common.hash.Hashing;
 import org.apache.hadoop.hive.ql.exec.UDF;
 import org.apache.hadoop.hive.ql.exec.UDFArgumentTypeException;
+import org.apache.hadoop.hive.ql.metadata.HiveException;
 import org.apache.hadoop.hive.ql.udf.generic.GenericUDF;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
@@ -33,10 +34,10 @@ public class MD5 extends GenericUDF {
      * @param arguments 传入参数
      * @return md5值
      */
-    public Object evaluate(DeferredObject[] arguments) {
+    public Object evaluate(DeferredObject[] arguments)  throws HiveException {
         StringBuffer sb = new StringBuffer() ;
         for (int i = 0; i < arguments.length; i++) {
-             sb.append(arguments[i].toString()) ;
+             sb.append(arguments[i].get().toString()) ;
         }
         Text result = new Text(Hashing.md5().hashString(sb.toString()).toString());
         return  result ;
@@ -45,5 +46,16 @@ public class MD5 extends GenericUDF {
     @Override
     public String getDisplayString(String[] children) {
         return getStandardDisplayString("_md5", children, ",");
+    }
+
+
+    public static void main(String[] args) throws Exception {
+        MD5 md5 = new MD5();
+        String [] arguments = {"123","123"} ;
+        StringBuffer sb = new StringBuffer() ;
+        for (int i = 0; i < arguments.length; i++) {
+            sb.append(arguments[i].toString()) ;
+        }
+        System.out.println(Hashing.md5().hashString(sb.toString()).toString());
     }
 }
