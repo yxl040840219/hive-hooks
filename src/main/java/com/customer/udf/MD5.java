@@ -7,6 +7,7 @@ import org.apache.hadoop.hive.ql.exec.UDFArgumentTypeException;
 import org.apache.hadoop.hive.ql.metadata.HiveException;
 import org.apache.hadoop.hive.ql.udf.generic.GenericUDF;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
+import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspectorConverters;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
 import org.apache.hadoop.io.Text;
 
@@ -19,12 +20,18 @@ import org.apache.hadoop.io.Text;
 public class MD5 extends GenericUDF {
 
 
-    private transient ObjectInspector[] argumentOIs;
+    private transient ObjectInspectorConverters.Converter[] converters;
 
     @Override
     public ObjectInspector initialize(ObjectInspector[] arguments) throws UDFArgumentTypeException {
+        converters = new ObjectInspectorConverters.Converter[arguments.length];
+        for (int i = 0; i < arguments.length; i++) {
+            converters[i] = ObjectInspectorConverters
+                    .getConverter(
+                            arguments[i],
+                            PrimitiveObjectInspectorFactory.writableStringObjectInspector);
+        }
 
-        argumentOIs = arguments;
         return PrimitiveObjectInspectorFactory.writableStringObjectInspector ;
     }
 
@@ -36,7 +43,7 @@ public class MD5 extends GenericUDF {
     public Object evaluate(DeferredObject[] arguments)  throws HiveException {
         StringBuffer sb = new StringBuffer() ;
         for (int i = 0; i < arguments.length; i++) {
-             sb.append(arguments[i].get().toString()) ;
+             sb.append(converters[i].convert(arguments[i].get())) ;
         }
         Text result = new Text(Hashing.md5().hashString(sb.toString()).toString());
         return  result ;
