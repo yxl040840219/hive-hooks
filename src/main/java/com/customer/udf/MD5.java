@@ -143,7 +143,7 @@ public class MD5 extends GenericUDF {
 
     public static void main(String[] args) throws Exception {
         MD5 md5 = new MD5();
-        Integer [] arguments = {123,123} ;
+        Integer [] arguments = {1000078,1000079,1000080,1000081} ;
         StringBuffer sb = new StringBuffer() ;
         for (int i = 0; i < arguments.length; i++) {
             sb.append(arguments[i].toString()) ;
