@@ -1,4 +1,4 @@
-import com.customer.udf.MD5;
+import com.customer.deprecate.MD5;
 import com.google.common.hash.Hashing;
 
 /**
