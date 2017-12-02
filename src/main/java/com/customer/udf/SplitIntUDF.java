@@ -9,11 +9,11 @@ import java.util.ArrayList;
  */
 public class SplitIntUDF extends UDF {
 
-    public Integer [] evaluate(Object content,String separator){
+    public ArrayList<Integer> evaluate(final Object content, final String separator){
         ArrayList<Integer> result = new ArrayList<Integer>();
         for (String str : content.toString().split(separator.toString(), -1)) {
             result.add(Integer.parseInt(str));
         }
-        return result.toArray(new Integer[0]) ;
+        return result ;
     }
 }
