@@ -62,8 +62,4 @@ class SplitInt extends GenericUDF {
 		return getStandardDisplayString("split_int", children);
 	}
 
-	public static void main(String[] args) {
-		System.out.println(Double.valueOf("2.0").intValue());
-	}
-	
 }
