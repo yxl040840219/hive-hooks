@@ -3,6 +3,8 @@ package com.customer.udf;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+
 import org.apache.hadoop.hive.ql.exec.UDF;
 
 public class MonthDiff extends UDF {
@@ -17,6 +19,16 @@ public class MonthDiff extends UDF {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        long month =(endCalendar.getTimeInMillis() - startCalendar.getTimeInMillis()) / (3600 * 1000 * 24 * 30l);
+        return month ;
+    }
+
+    public Long evaluate(final Date start, final Date end)  {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM") ;
+        Calendar startCalendar = Calendar.getInstance() ;
+        Calendar endCalendar = Calendar.getInstance();
+        startCalendar.setTime(start);
+        endCalendar.setTime(end);
         long month =(endCalendar.getTimeInMillis() - startCalendar.getTimeInMillis()) / (3600 * 1000 * 24 * 30l);
         return month ;
     }
