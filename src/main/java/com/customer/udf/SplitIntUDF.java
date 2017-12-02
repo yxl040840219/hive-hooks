@@ -1,6 +1,5 @@
 package com.customer.udf;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.hadoop.hive.ql.exec.UDF;
 
 import java.util.ArrayList;
@@ -16,10 +15,5 @@ public class SplitIntUDF extends UDF {
             result.add(Integer.parseInt(str));
         }
         return result.toArray(new Integer[0]) ;
-    }
-
-    public static void main(String[] args){
-        Integer [] a = new SplitIntUDF().evaluate("1,2,3,4",",") ;
-        System.out.println(ArrayUtils.toString(a));
     }
 }
