@@ -21,9 +21,6 @@ import org.apache.hadoop.io.Text;
 class MonthDiff extends UDF {
 
     public long evaluate(final String start, final String end) throws HiveException {
-        assert StringUtils.isNotEmpty(start) ;
-        assert StringUtils.isNotEmpty(end) ;
-
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM") ;
         Calendar startCalendar = Calendar.getInstance() ;
         Calendar endCalendar = Calendar.getInstance();
@@ -36,18 +33,7 @@ class MonthDiff extends UDF {
         return monthDiff(startCalendar,endCalendar) ;
     }
 
-    public long evaluate(final Date start, final Date end){
-        Calendar startCalendar = Calendar.getInstance() ;
-        Calendar endCalendar = Calendar.getInstance();
-        startCalendar.setTime(start);
-        endCalendar.setTime(end);
-        return monthDiff(startCalendar, endCalendar) ;
-
-    }
-
     private long monthDiff(Calendar start,Calendar end){
-        assert start != null ;
-        assert end != null ;
         long month =(end.getTimeInMillis() - start.getTimeInMillis()) / (3600 * 1000 * 24 * 30l);
         return month ;
     }
