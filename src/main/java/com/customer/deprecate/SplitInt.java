@@ -13,7 +13,7 @@ import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectIn
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 
-class SplitInt extends GenericUDF {
+public class SplitInt extends GenericUDF {
 	private transient ObjectInspectorConverters.Converter[] converters;
 
 	@Override

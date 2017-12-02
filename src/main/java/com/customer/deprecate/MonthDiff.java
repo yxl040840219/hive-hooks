@@ -14,7 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-class MonthDiff extends GenericUDF {
+public class MonthDiff extends GenericUDF {
 	private transient ObjectInspectorConverters.Converter[] converters;
 
 	@Override
