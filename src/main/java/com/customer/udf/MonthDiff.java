@@ -20,7 +20,7 @@ import org.apache.hadoop.io.Text;
 
 class MonthDiff extends UDF {
 
-    public long evaluate(final String start, final String end) throws HiveException {
+    public long evaluate(final String start, final String end)  {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM") ;
         Calendar startCalendar = Calendar.getInstance() ;
         Calendar endCalendar = Calendar.getInstance();
@@ -28,7 +28,7 @@ class MonthDiff extends UDF {
             startCalendar.setTime(sdf.parse(start.toString().trim())) ;
             endCalendar.setTime(sdf.parse(end.toString().trim()));
         } catch (ParseException e) {
-            throw new HiveException("日期解析错误 yyyy-MM") ;
+            e.printStackTrace();
         }
         return monthDiff(startCalendar,endCalendar) ;
     }
