@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.apache.hive.hooks</groupId>
-	<artifactId>hive-custom</artifactId>
+	<artifactId>hive-hook</artifactId>
 	<version>0.0.1</version>
 	<packaging>jar</packaging>
 

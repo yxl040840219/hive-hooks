@@ -1,4 +1,4 @@
-package com.customer.deprecate;
+package com.customer.udf;
 
 import com.google.common.hash.Hashing;
 import org.apache.hadoop.hive.ql.exec.UDFArgumentTypeException;
