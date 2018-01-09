@@ -1,4 +1,4 @@
-package com.customer.udf;
+package com.customer.deprecate;
 
 import org.apache.hadoop.hive.ql.exec.UDF;
 /**
