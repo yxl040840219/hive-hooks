@@ -1,4 +1,5 @@
-import com.customer.udf.MonthDiff;
+
+import com.customer.deprecate.MonthDiff;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -10,7 +11,5 @@ public class MonthDiffTest {
 
     public static void main(String[] args) throws Exception {
         MonthDiff monthDiff = new MonthDiff();
-        Long month  = monthDiff.evaluate("2017-10","2017-12") ;
-        System.out.println(month) ;
     }
 }
