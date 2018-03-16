@@ -55,8 +55,13 @@ public class MonthDiff extends GenericUDF {
 		} catch (ParseException e) {
 			throw new HiveException("日期解析错误 yyyy-MM") ;
 		}
-		long month =(endCalendar.getTimeInMillis() - startCalendar.getTimeInMillis()) / (3600 * 1000 * 24 * 30l);
-		LongWritable result = new LongWritable(month);
+		if(startCalendar.after(endCalendar)){
+		    throw new HiveException("开始月份大于结束月份") ;
+        }
+		int month = endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH) ;
+		int year = (endCalendar.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR)) * 12 ;
+		int months = month + year ;
+		LongWritable result = new LongWritable(months);
 		return result;
 	}
 
